@@ -174,25 +174,24 @@ function PublicView() {
               <div className="flex-1 bg-white/10 backdrop-blur rounded-2xl px-4 py-3 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
                 <div>
                   <p className="text-xs md:text-sm font-medium flex items-center gap-2 font-gothic">
-                    Disponibilidad de horarios
+                  Selecciona tu horario de asistencia al Global Money Week en el Centro de Exposiciones Quito.
                   </p>
                   <p className="text-xs md:text-sm text-white/80 font-myriad">
-                    Selecciona tu franja horaria para asistir a Global Money Week
-                    en el Centro de Exposiciones Quito.
+                  1era Feria Nacional de Educación Financiera de la Economía Popular y Solidaria
                   </p>
                 </div>
                 <div className="flex flex-wrap gap-2 text-[11px] md:text-xs">
                   <span className="badge bg-[#e6f7d9] text-[#2c7a1f]">
                     <span className="h-2 w-2 rounded-full bg-[#2c7a1f] mr-1.5" />
-                    Alta (&gt; 100)
+                    Alta 
                   </span>
                   <span className="badge bg-[#fff4d2] text-[#d88700]">
                     <span className="h-2 w-2 rounded-full bg-[#d88700] mr-1.5" />
-                    Media (50–100)
+                    Media 
                   </span>
                   <span className="badge bg-[#ffe3e3] text-[#c53030]">
                     <span className="h-2 w-2 rounded-full bg-[#c53030] mr-1.5" />
-                    Baja (&lt; 50)
+                    Baja 
                   </span>
                 </div>
               </div>
