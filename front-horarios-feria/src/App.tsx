@@ -1,5 +1,11 @@
 import { useState, useRef } from "react";
-import { BrowserRouter, Routes, Route, Navigate, useNavigate } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+  useNavigate,
+} from "react-router-dom";
 import { useEvents } from "./hooks/useEvents";
 import { useCreateReservation } from "./hooks/useReservations";
 import { DayCard } from "./components/DayCard";
@@ -13,6 +19,7 @@ import { useAuth } from "./contexts/AuthContext";
 import type { TimeSlot } from "./data/eventData";
 import fondo from "./assets/fondo-GMW.png";
 import logoGMW from "./assets/Logo-GMW-magenta.png";
+import logoHeaderDerecho from "./assets/logo-header-derecho-v2.png";
 
 /**
  * Componente para la vista pública
@@ -28,11 +35,15 @@ function PublicView() {
   const [selectedDayId, setSelectedDayId] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [confirmedModalOpen, setConfirmedModalOpen] = useState(false);
-  const [confirmedModalSlotId, setConfirmedModalSlotId] = useState<string | null>(null);
+  const [confirmedModalSlotId, setConfirmedModalSlotId] = useState<
+    string | null
+  >(null);
   const [confirmedModalDayLabel, setConfirmedModalDayLabel] = useState("");
   const [confirmedModalSlotTime, setConfirmedModalSlotTime] = useState("");
   const [logoClickCount, setLogoClickCount] = useState(0);
-  const logoClickTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const logoClickTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(
+    null,
+  );
 
   const handleLogoClick = () => {
     if (logoClickTimeoutRef.current) {
@@ -46,7 +57,10 @@ function PublicView() {
       navigate("/admin");
       return;
     }
-    logoClickTimeoutRef.current = setTimeout(() => setLogoClickCount(0), LOGO_CLICK_RESET_MS);
+    logoClickTimeoutRef.current = setTimeout(
+      () => setLogoClickCount(0),
+      LOGO_CLICK_RESET_MS,
+    );
   };
 
   const handleOpenReservation = (slot: TimeSlot, dayId: string) => {
@@ -152,10 +166,10 @@ function PublicView() {
       />
       <div className="relative z-10 flex flex-col min-h-screen">
         <header className="bg-primary text-white shadow-lg">
-          <div className="container-page py-4 md:py-5 flex flex-col gap-4">
-            <div className="flex flex-col md:flex-row md:items-center gap-6">
-              {/* Logo GMW: 7 clics abre el panel de administración */}
-              <div className="flex flex-col gap-2">
+          <div className="container-page py-4 md:py-5">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 md:gap-2">
+              {/* 15%: Logo GMW */}
+              <div className="w-full md:w-[15%] flex justify-center shrink-0 min-h-[5rem] md:min-h-0 items-center">
                 <button
                   type="button"
                   onClick={handleLogoClick}
@@ -165,51 +179,63 @@ function PublicView() {
                   <img
                     src={logoGMW}
                     alt="Global Money Week"
-                    className="h-24 md:h-32 lg:h-25 w-auto object-contain pointer-events-none select-none"
+                    className="h-24 md:h-28 lg:h-32 w-auto object-contain pointer-events-none select-none"
                   />
                 </button>
               </div>
-
-              {/* Div de disponibilidad a la derecha */}
-              <div className="flex-1 bg-white/10 backdrop-blur rounded-2xl px-4 py-3 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-                <div>
-                  <p className="text-xs md:text-sm font-medium flex items-center gap-2 font-gothic">
-                  Selecciona tu horario de asistencia al Global Money Week en el Centro de Exposiciones Quito.
-                  </p>
-                  <p className="text-xs md:text-sm text-white/80 font-myriad">
-                  1era Feria Nacional de Educación Financiera de la Economía Popular y Solidaria
-                  </p>
-                </div>
-                <div className="flex flex-wrap gap-2 text-[11px] md:text-xs">
-                  <span className="badge bg-[#e6f7d9] text-[#2c7a1f]">
-                    <span className="h-2 w-2 rounded-full bg-[#2c7a1f] mr-1.5" />
-                    Alta 
-                  </span>
-                  <span className="badge bg-[#fff4d2] text-[#d88700]">
-                    <span className="h-2 w-2 rounded-full bg-[#d88700] mr-1.5" />
-                    Media 
-                  </span>
-                  <span className="badge bg-[#ffe3e3] text-[#c53030]">
-                    <span className="h-2 w-2 rounded-full bg-[#c53030] mr-1.5" />
-                    Baja 
-                  </span>
-                </div>
+              {/* 70%: Título centrado, fuente más grande */}
+              <div className="w-full md:w-[70%] flex items-center justify-center min-h-[5rem] md:min-h-[6rem] px-2 min-w-0">
+                <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold font-childhood uppercase text-white text-center leading-snug tracking-widest">
+                  Primera Feria Nacional de Educación Financiera de la Economía
+                  Popular y Solidaria
+                </p>
+              </div>
+              {/* 15%: Logo (ministerio / derecho) */}
+              <div className="w-full md:w-[15%] flex justify-center shrink-0 min-h-[4rem] md:min-h-0 items-center">
+                <img
+                  src={logoHeaderDerecho}
+                  alt=""
+                  className="h-16 sm:h-20 md:h-24 lg:h-28 w-auto object-contain mix-blend-lighten header-logo-sharp"
+                />
               </div>
             </div>
           </div>
         </header>
 
         <main className="container-page space-y-6 flex-1">
-        <div className="mt-2 bg-white/80 backdrop-blur rounded-2xl px-4 py-3 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-          <p className="text-sm md:text-base text-[#6c757d] max-w-3xl font-myriad">
-            Visualiza la disponibilidad de cupos por día y horario, y realiza la
-            reserva de tu unidad educativa de manera rápida y segura. Cada
-            franja cuenta con una capacidad máxima de{" "}
-            <span className="font-semibold text-primary font-gothic">
-              200 estudiantes
-            </span>
-            .
-          </p>
+          <div className="mt-2 bg-white/80 backdrop-blur rounded-2xl px-4 py-3 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+            <div>
+              <p className="text-sm md:text-base text-[#6c757d] max-w-3xl font-myriad">
+                Selecciona tu horario de asistencia al Global Money Week en el
+                Centro de Exposiciones Quito.
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-2 text-[11px] md:text-xs">
+              <span className="badge bg-[#e6f7d9] text-[#2c7a1f]">
+                <span className="h-2 w-2 rounded-full bg-[#2c7a1f] mr-1.5" />
+                Alta
+              </span>
+              <span className="badge bg-[#fff4d2] text-[#d88700]">
+                <span className="h-2 w-2 rounded-full bg-[#d88700] mr-1.5" />
+                Media
+              </span>
+              <span className="badge bg-[#ffe3e3] text-[#c53030]">
+                <span className="h-2 w-2 rounded-full bg-[#c53030] mr-1.5" />
+                Baja
+              </span>
+            </div>
+          </div>
+          <div className="mt-2 bg-white/80 backdrop-blur rounded-2xl px-4 py-3 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+          
+            <p className="text-sm md:text-base text-[#6c757d] max-w-3xl font-myriad">
+              Visualiza la disponibilidad de cupos por día y horario, y realiza
+              la reserva de tu unidad educativa de manera rápida y segura. Cada
+              franja cuenta con una capacidad máxima de{" "}
+              <span className="font-semibold text-primary font-gothic">
+                200 estudiantes
+              </span>
+              .
+            </p>
           </div>
           <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
             {convertedDays.map((day) => (
