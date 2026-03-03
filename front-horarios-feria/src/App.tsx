@@ -19,7 +19,7 @@ import { useAuth } from "./contexts/AuthContext";
 import type { TimeSlot } from "./data/eventData";
 import fondo from "./assets/fondo-GMW.png";
 import logoGMW from "./assets/Logo-GMW-magenta.png";
-import logoHeaderDerecho from "./assets/logo-header-derecho-v2.png";
+import logoSEPS from "./assets/logoseps4.png";
 
 /**
  * Componente para la vista pública
@@ -166,14 +166,19 @@ function PublicView() {
       />
       <div className="relative z-10 flex flex-col min-h-screen">
         <header className="bg-primary text-white shadow-lg">
-          <div className="container-page py-4 md:py-5">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 md:gap-2">
-              {/* 15%: Logo GMW */}
-              <div className="w-full md:w-[15%] flex justify-center shrink-0 min-h-[5rem] md:min-h-0 items-center">
+          <div className="container-page py-4 md:py-5 px-[10%]">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-center gap-4 md:gap-6">
+              {/* 40%: Los dos logos */}
+              <div className="w-full md:w-[40%] flex flex-row items-center justify-center gap-4 md:gap-6 shrink-0 min-h-0 px-4 md:px-6">
+                <img
+                  src={logoSEPS}
+                  alt=""
+                  className="h-20 sm:h-24 md:h-28 lg:h-24 w-auto object-contain pointer-events-none select-none"
+                />
                 <button
                   type="button"
                   onClick={handleLogoClick}
-                  className="flex items-start p-0 border-0 bg-transparent cursor-default text-left focus:outline-none [&:focus]:outline-none [&:focus]:ring-0"
+                  className="flex items-center justify-center p-0 border-0 bg-transparent cursor-default focus:outline-none [&:focus]:outline-none [&:focus]:ring-0"
                   aria-label="Global Money Week"
                 >
                   <img
@@ -183,20 +188,11 @@ function PublicView() {
                   />
                 </button>
               </div>
-              {/* 70%: Título centrado, fuente más grande */}
-              <div className="w-full md:w-[70%] flex items-center justify-center min-h-[5rem] md:min-h-[6rem] px-2 min-w-0">
-                <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold font-childhood uppercase text-white text-center leading-snug tracking-widest">
-                  Primera Feria Nacional de Educación Financiera de la Economía
-                  Popular y Solidaria
+              {/* 60%: Título */}
+              <div className="w-full md:w-[60%] flex items-center justify-center min-h-0 min-w-0">
+                <p className="w-full m-0 text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold font-childhood uppercase text-white text-center leading-snug tracking-widest">
+                Feria de Educación Financiera “Bosque Solidario”
                 </p>
-              </div>
-              {/* 15%: Logo (ministerio / derecho) */}
-              <div className="w-full md:w-[15%] flex justify-center shrink-0 min-h-[4rem] md:min-h-0 items-center">
-                <img
-                  src={logoHeaderDerecho}
-                  alt=""
-                  className="h-16 sm:h-20 md:h-24 lg:h-28 w-auto object-contain mix-blend-lighten header-logo-sharp"
-                />
               </div>
             </div>
           </div>
