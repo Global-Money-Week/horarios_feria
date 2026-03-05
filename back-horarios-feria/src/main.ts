@@ -5,9 +5,12 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  // Habilitar CORS
+  // Habilitar CORS: acepta varias URLs en FRONTEND_URL separadas por coma
+  const frontendUrls = process.env.FRONTEND_URL
+    ? process.env.FRONTEND_URL.split(',').map((url) => url.trim()).filter(Boolean)
+    : ['http://localhost:5173'];
   app.enableCors({
-    origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+    origin: frontendUrls.length > 0 ? frontendUrls : true,
     credentials: true,
   });
 

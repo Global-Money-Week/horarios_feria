@@ -209,7 +209,8 @@ export class ReservationsService {
    * Retorna la URL a la que debe redirigir (frontend con ?confirmed=true o ?confirmed=error).
    */
   async confirmByToken(token: string | undefined): Promise<{ redirectUrl: string }> {
-    const frontendUrl = this.configService.get<string>('FRONTEND_URL')?.replace(/\/$/, '') || '';
+    const frontendUrlRaw = this.configService.get<string>('FRONTEND_URL') || '';
+    const frontendUrl = frontendUrlRaw.split(',')[0].trim().replace(/\/$/, '') || '';
     const baseRedirect = frontendUrl || '/';
 
     if (!token || typeof token !== 'string' || token.trim().length === 0) {
