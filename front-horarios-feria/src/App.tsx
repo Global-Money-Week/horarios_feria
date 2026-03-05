@@ -184,8 +184,8 @@ function PublicView() {
               </div>
               {/* Título — pegado a la derecha, blanco con contorno primary */}
               <div className="w-full md:w-[50%] flex items-center justify-end min-h-0 min-w-0 px-0 md:px-0">
-                <p className="w-full m-0 text-sm sm:text-base md:text-lg lg:text-xl font-bold font-childhood uppercase leading-snug tracking-widest header-title-primary-outline">
-                Feria de Educación Financiera “Bosque Solidario”
+                <p className="w-full m-0 text-sm sm:text-base md:text-lg lg:text-xl font-bold font-childhood uppercase leading-snug tracking-widest header-title-primary-outline text-center">
+                Feria de Educación Financiera “Bosque Solidario” Centro de Exposiciones Quito
                 </p>
               </div>
             </div>
