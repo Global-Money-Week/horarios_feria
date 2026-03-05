@@ -1,6 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { EventDayDto } from './dto/event-response.dto';
+import type { ConfirmedInstitutionsResponseDto } from './dto/confirmed-institutions.dto';
 
 @Injectable()
 export class EventsService {
@@ -64,6 +65,32 @@ export class EventsService {
         slots,
       };
     });
+  }
+
+  /**
+   * Obtiene instituciones confirmadas para un slot (solo nombre y estudiantes, público)
+   */
+  async getConfirmedInstitutions(slotId: string): Promise<ConfirmedInstitutionsResponseDto> {
+    const slot = await this.prisma.timeSlot.findUnique({
+      where: { id: slotId },
+      include: {
+        event: true,
+        reservations: {
+          where: { status: 'confirmada' },
+          select: { schoolName: true, students: true },
+        },
+      },
+    });
+    if (!slot) {
+      throw new NotFoundException('Horario no encontrado');
+    }
+    const day = this.formatDate(slot.event.date);
+    const time = `${slot.timeStart} - ${slot.timeEnd}`;
+    const institutions = slot.reservations.map((r) => ({
+      schoolName: r.schoolName,
+      students: r.students,
+    }));
+    return { day, time, institutions };
   }
 
   /**

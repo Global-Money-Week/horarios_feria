@@ -13,7 +13,18 @@ export class PrismaService extends PrismaClient implements OnModuleInit, OnModul
     }
 
     // Prisma 7: Requiere usar un adapter
-    const pool = new Pool({ connectionString: databaseUrl });
+    // Render y la mayoría de clouds exigen SSL (evita P1010 "SSL/TLS required")
+    const useSsl =
+      databaseUrl.includes('render.com') ||
+      databaseUrl.includes('neon.tech') ||
+      process.env.DATABASE_SSL === 'true';
+    // Conexiones inactivas se cierran antes de que el servidor las corte (evita P1017 ConnectionClosed)
+    const pool = new Pool({
+      connectionString: databaseUrl,
+      ssl: useSsl ? { rejectUnauthorized: true } : undefined,
+      idleTimeoutMillis: 2 * 60 * 1000, // 2 min: cerrar conexiones inactivas antes del timeout del servidor
+      connectionTimeoutMillis: 10000,
+    });
     const adapter = new PrismaPg(pool);
 
     super({ adapter });
