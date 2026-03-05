@@ -18,8 +18,7 @@ import { LoginPage } from "./components/admin/LoginPage";
 import { useAuth } from "./contexts/AuthContext";
 import type { TimeSlot } from "./data/eventData";
 import fondo from "./assets/fondo-GMW.png";
-import logoGMW from "./assets/Logo-GMW-magenta.png";
-import logoSEPS from "./assets/logoseps4.png";
+import logoGMWSEPS from "./assets/logoGMWSEPS.png";
 
 /**
  * Componente para la vista pública
@@ -165,16 +164,11 @@ function PublicView() {
         aria-hidden="true"
       />
       <div className="relative z-10 flex flex-col min-h-screen">
-        <header className="bg-primary text-white shadow-lg">
-          <div className="container-page py-4 md:py-5 px-[10%]">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-center gap-4 md:gap-6">
-              {/* 40%: Los dos logos */}
-              <div className="w-full md:w-[40%] flex flex-row items-center justify-center gap-4 md:gap-6 shrink-0 min-h-0 px-4 md:px-6">
-                <img
-                  src={logoSEPS}
-                  alt=""
-                  className="h-20 sm:h-24 md:h-28 lg:h-24 w-auto object-contain pointer-events-none select-none"
-                />
+        <header className="header_bottom text-[#2c3e50]">
+          <div className="header_bottom_inner w-full max-w-6xl mx-auto flex flex-col justify-center py-4 md:py-0 md:min-h-[90px]">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 md:gap-4">
+              {/* Logo combinado GMW + SEPS — pegado a la izquierda */}
+              <div className="w-full md:w-[40%] flex items-center justify-start shrink-0 min-h-0 px-0 md:px-0">
                 <button
                   type="button"
                   onClick={handleLogoClick}
@@ -182,15 +176,15 @@ function PublicView() {
                   aria-label="Global Money Week"
                 >
                   <img
-                    src={logoGMW}
-                    alt="Global Money Week"
-                    className="h-24 md:h-28 lg:h-32 w-auto object-contain pointer-events-none select-none"
+                    src={logoGMWSEPS}
+                    alt="Global Money Week - Superintendencia de Economía Popular y Solidaria"
+                    className="h-20 sm:h-24 md:h-28 lg:h-28 w-auto object-contain pointer-events-none select-none"
                   />
                 </button>
               </div>
-              {/* 60%: Título */}
-              <div className="w-full md:w-[60%] flex items-center justify-center min-h-0 min-w-0">
-                <p className="w-full m-0 text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold font-childhood uppercase text-white text-center leading-snug tracking-widest">
+              {/* Título — pegado a la derecha, blanco con contorno primary */}
+              <div className="w-full md:w-[50%] flex items-center justify-end min-h-0 min-w-0 px-0 md:px-0">
+                <p className="w-full m-0 text-sm sm:text-base md:text-lg lg:text-xl font-bold font-childhood uppercase leading-snug tracking-widest header-title-primary-outline">
                 Feria de Educación Financiera “Bosque Solidario”
                 </p>
               </div>

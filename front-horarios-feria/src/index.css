@@ -133,11 +133,48 @@
     filter: contrast(1.12);
   }
 
+  .header-title-primary-outline {
+    color: var(--color-primary);
+  }
+
   .font-gothic {
     font-family: 'GHOTIC', sans-serif;
   }
 
   .font-myriad {
     font-family: 'MyriadPro', sans-serif;
+  }
+
+  .header_bottom {
+    background-color: rgba(251, 212, 159, 1);
+    background-image: url(https://globalmoneyweek.seps.gob.ec/wp-content/uploads/2026/02/bg_doods_tra.png);
+    box-shadow: 0 0 51px 0 rgba(79, 57, 37, 0.09);
+    min-height: 90px;
+  }
+
+  .header_bottom_inner {
+    padding: 0 15px;
+    min-height: 90px;
+    box-sizing: border-box;
+  }
+
+  @media (max-width: 1000px) {
+    .header_bottom {
+      background-color: #fff !important;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .header_bottom .header_bottom_inner {
+      padding-left: 12px;
+      padding-right: 12px;
+    }
+  }
+
+  @media (max-width: 420px) {
+    .header_bottom .header_bottom_inner {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
   }
 }

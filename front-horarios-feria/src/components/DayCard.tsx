@@ -37,7 +37,7 @@ function getStatusStyles(available: number) {
 export function DayCard({ day, onReserveClick, onShowConfirmedClick }: DayCardProps) {
   return (
     <section className="space-y-6">
-      <header className="flex items-center gap-3 px-0 mb-1 rounded-xl bg-[#A72974] text-white shadow-md overflow-hidden">
+      <header className="flex items-center gap-3 px-0 mb-1 rounded-xl bg-[#A72974] text-white overflow-hidden">
         <div className="w-12 h-12 flex items-center justify-center shrink-0">
           <span className="material-symbols-outlined text-2xl">calendar_month</span>
         </div>

@@ -8,8 +8,8 @@ import logomichi from '../assets/logomichi.png';
  */
 export function AppFooter() {
   return (
-    <footer className="mt-auto py-3 sm:py-4 bg-slate-100/30 backdrop-blur-sm border-t border-slate-200">
-      <p className="text-center text-slate-500 text-xs sm:text-sm font-myriad flex flex-wrap items-center justify-center gap-x-3 gap-y-1">
+    <footer className="mt-auto py-3 sm:py-4 bg-primary/20 backdrop-blur-md border-t border-primary/30">
+      <p className="text-center text-slate-600 text-xs sm:text-sm font-myriad flex flex-wrap items-center justify-center gap-x-3 gap-y-1">
         <span>© Elaborado por</span>
         <span className="inline-flex items-center gap-3">
           <img src={logoclearminds} alt="Clearminds" className="h-7 sm:h-7 w-auto object-contain" />
