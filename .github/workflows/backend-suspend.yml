@@ -12,36 +12,6 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Esperar hasta el horario programado
-        run: |
-          TARGET_HOUR=4
-          TARGET_MINUTE=0
-          
-          while true; do
-            CURRENT_HOUR=$(date -u +%H)
-            CURRENT_MINUTE=$(date -u +%M)
-            
-            echo "⏰ Hora actual: $CURRENT_HOUR:$CURRENT_MINUTE UTC ($(date -u '+%Y-%m-%d %H:%M:%S'))"
-            echo "🎯 Hora objetivo: $TARGET_HOUR:$TARGET_MINUTE UTC (11:00 PM Ecuador)"
-            
-            if [ "$CURRENT_HOUR" -eq "$TARGET_HOUR" ] && [ "$CURRENT_MINUTE" -ge "$TARGET_MINUTE" ]; then
-              echo "✅ ¡Hora alcanzada! Procediendo a suspender el backend..."
-              break
-            fi
-            
-            CURRENT_TOTAL=$((CURRENT_HOUR * 60 + CURRENT_MINUTE))
-            TARGET_TOTAL=$((TARGET_HOUR * 60 + TARGET_MINUTE))
-            DIFF=$((TARGET_TOTAL - CURRENT_TOTAL))
-            
-            if [ $DIFF -lt 0 ]; then
-              DIFF=$((DIFF + 1440))
-            fi
-            
-            echo "⏳ Tiempo restante: $DIFF minutos"
-            echo "💤 Esperando 30 segundos..."
-            sleep 30
-          done
-      
       - name: Validar configuración
         run: |
           echo "🔍 Validando variables de entorno..."
