@@ -1,0 +1,107 @@
+name: Backend - Suspender Servicio
+
+on:
+  schedule:
+    # Apagar backend a las 11:00 PM hora Ecuador (04:00 UTC del día siguiente)
+    - cron: "0 4 * * *"
+  workflow_dispatch:
+
+jobs:
+  suspend-backend:
+    name: Suspender Backend en Render
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Esperar hasta el horario programado
+        run: |
+          TARGET_HOUR=4
+          TARGET_MINUTE=0
+          
+          while true; do
+            CURRENT_HOUR=$(date -u +%H)
+            CURRENT_MINUTE=$(date -u +%M)
+            
+            echo "⏰ Hora actual: $CURRENT_HOUR:$CURRENT_MINUTE UTC ($(date -u '+%Y-%m-%d %H:%M:%S'))"
+            echo "🎯 Hora objetivo: $TARGET_HOUR:$TARGET_MINUTE UTC (11:00 PM Ecuador)"
+            
+            if [ "$CURRENT_HOUR" -eq "$TARGET_HOUR" ] && [ "$CURRENT_MINUTE" -ge "$TARGET_MINUTE" ]; then
+              echo "✅ ¡Hora alcanzada! Procediendo a suspender el backend..."
+              break
+            fi
+            
+            CURRENT_TOTAL=$((CURRENT_HOUR * 60 + CURRENT_MINUTE))
+            TARGET_TOTAL=$((TARGET_HOUR * 60 + TARGET_MINUTE))
+            DIFF=$((TARGET_TOTAL - CURRENT_TOTAL))
+            
+            if [ $DIFF -lt 0 ]; then
+              DIFF=$((DIFF + 1440))
+            fi
+            
+            echo "⏳ Tiempo restante: $DIFF minutos"
+            echo "💤 Esperando 30 segundos..."
+            sleep 30
+          done
+      
+      - name: Validar configuración
+        run: |
+          echo "🔍 Validando variables de entorno..."
+          if [ -z "${{ secrets.BACKEND_SERVICE_ID }}" ]; then
+            echo "❌ ERROR: BACKEND_SERVICE_ID no está configurado"
+            exit 1
+          fi
+          if [ -z "${{ secrets.RENDER_API_KEY }}" ]; then
+            echo "❌ ERROR: RENDER_API_KEY no está configurado"
+            exit 1
+          fi
+          echo "✅ Variables configuradas correctamente"
+
+      - name: Suspender backend en Render
+        run: |
+          echo "🌙 Iniciando suspensión del backend..."
+          echo "⏰ Hora: $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+          echo "📍 Horario Ecuador: 11:00 PM"
+          echo "🔑 Service ID: ${{ secrets.BACKEND_SERVICE_ID }}"
+          
+          RESPONSE=$(curl -s -w "\n%{http_code}" -X POST \
+            "https://api.render.com/v1/services/${{ secrets.BACKEND_SERVICE_ID }}/suspend" \
+            -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
+            -H "Accept: application/json")
+          
+          HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
+          BODY=$(echo "$RESPONSE" | sed '$d')
+          
+          echo "📊 Código HTTP: $HTTP_CODE"
+          echo "📄 Respuesta completa: $BODY"
+          
+          if [ "$HTTP_CODE" -eq 200 ] || [ "$HTTP_CODE" -eq 202 ]; then
+            echo "✅ Backend suspendido exitosamente"
+            echo "⏳ Esperando 5 segundos..."
+            sleep 5
+          else
+            echo "❌ Error al suspender el backend"
+            exit 1
+          fi
+
+      - name: Verificar estado del servicio
+        run: |
+          echo "🔍 Verificando estado del backend..."
+          
+          STATUS_RESPONSE=$(curl -s \
+            "https://api.render.com/v1/services/${{ secrets.BACKEND_SERVICE_ID }}" \
+            -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
+            -H "Accept: application/json")
+          
+          echo "📄 Estado del servicio: $STATUS_RESPONSE"
+          
+          if command -v jq &> /dev/null; then
+            SERVICE_STATUS=$(echo "$STATUS_RESPONSE" | jq -r '.suspended // "unknown"')
+            echo "🔍 Suspended: $SERVICE_STATUS"
+          fi
+
+      - name: Registro de suspensión
+        run: |
+          echo "📝 Resumen de la operación:"
+          echo "   - Servicio: BACKEND"
+          echo "   - Acción: SUSPEND"
+          echo "   - Estado: COMPLETADO"
+          echo "   - Timestamp: $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
