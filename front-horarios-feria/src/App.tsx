@@ -7,7 +7,7 @@ import {
   useNavigate,
 } from "react-router-dom";
 import { useEvents } from "./hooks/useEvents";
-import { useGeneralMetrics } from "./hooks/useMetrics";
+import { usePublicTotalStudents } from "./hooks/useMetrics";
 import { useCreateReservation } from "./hooks/useReservations";
 import { DayCard } from "./components/DayCard";
 import { ReservationModal } from "./components/ReservationModal";
@@ -30,7 +30,7 @@ const LOGO_CLICK_RESET_MS = 2500;
 function PublicView() {
   const navigate = useNavigate();
   const { data: days, isLoading, error } = useEvents();
-  const { data: generalMetrics } = useGeneralMetrics();
+  const { data: totalStudents = 0 } = usePublicTotalStudents();
   const createReservation = useCreateReservation();
   const [selectedSlot, setSelectedSlot] = useState<TimeSlot | null>(null);
   const [selectedDayId, setSelectedDayId] = useState<string | null>(null);
@@ -200,7 +200,7 @@ function PublicView() {
               ¡Reserva tu cupo ahora y asegura tu lugar! No te quedes sin espacio,
               ¡ya hay más de{" "}
               <span className="font-semibold text-primary font-gothic">
-                {(generalMetrics?.totalStudents ?? 0).toLocaleString()} estudiantes
+                {totalStudents.toLocaleString()} estudiantes
               </span>{" "}
               inscritos!
             </p>

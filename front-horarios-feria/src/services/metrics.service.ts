@@ -6,6 +6,14 @@ import type { GeneralMetrics, DayMetrics, SlotMetrics } from '../types/api';
  */
 export const metricsService = {
   /**
+   * Obtiene el total de estudiantes (público, no requiere autenticación)
+   */
+  async getTotalStudents(): Promise<number> {
+    const response = await api.get<{ totalStudents: number }>('/metrics/public/total-students');
+    return response.data.totalStudents;
+  },
+
+  /**
    * Obtiene métricas generales
    */
   async getGeneralMetrics(): Promise<GeneralMetrics> {

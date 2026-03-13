@@ -212,6 +212,19 @@ export class MetricsService {
   }
 
   /**
+   * Obtiene solo el total de estudiantes inscritos (público)
+   * Este método es más eficiente que getGeneralMetrics para uso público
+   */
+  async getTotalStudents(): Promise<number> {
+    const reservations = await this.prisma.reservation.findMany({
+      where: { status: 'confirmada' },
+      select: { students: true },
+    });
+
+    return reservations.reduce((sum, r) => sum + r.students, 0);
+  }
+
+  /**
    * Formatea la fecha en formato legible
    * Usa métodos UTC para evitar problemas de zona horaria
    */

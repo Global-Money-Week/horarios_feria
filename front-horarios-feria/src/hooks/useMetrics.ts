@@ -15,6 +15,20 @@ export function useGeneralMetrics() {
 }
 
 /**
+ * Hook público para obtener el total de estudiantes (vista pública)
+ * Siempre se ejecuta, incluso sin autenticación
+ * Usa el endpoint público /metrics/public/total-students
+ */
+export function usePublicTotalStudents() {
+  return useQuery<number>({
+    queryKey: ['metrics', 'public', 'totalStudents'],
+    queryFn: () => metricsService.getTotalStudents(),
+    staleTime: 30000, // 30 segundos
+    retry: 2, // Reintentar 2 veces si falla
+  });
+}
+
+/**
  * Hook para obtener métricas por día (admin)
  */
 export function useDayMetrics() {
