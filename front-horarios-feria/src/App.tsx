@@ -197,12 +197,11 @@ function PublicView() {
         <main className="container-page space-y-6 flex-1">
           <div className="mt-2 bg-white/80 backdrop-blur rounded-2xl px-4 py-3 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
             <p className="text-sm md:text-base text-[#6c757d] max-w-3xl font-myriad">
-              ¡Reserva tu cupo ahora y asegura tu lugar! No te quedes sin espacio,
-              ¡ya hay más de{" "}
+              ¡Reserva tu cupo ahora y asegura tu lugar, no te quedes sin espacio! Ya hay más de{" "}
               <span className="font-semibold text-primary font-gothic">
                 {totalStudents.toLocaleString()} estudiantes
               </span>{" "}
-              inscritos!
+              inscritos.
             </p>
           </div>
           <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
