@@ -7,6 +7,7 @@ import {
   useNavigate,
 } from "react-router-dom";
 import { useEvents } from "./hooks/useEvents";
+import { useGeneralMetrics } from "./hooks/useMetrics";
 import { useCreateReservation } from "./hooks/useReservations";
 import { DayCard } from "./components/DayCard";
 import { ReservationModal } from "./components/ReservationModal";
@@ -29,6 +30,7 @@ const LOGO_CLICK_RESET_MS = 2500;
 function PublicView() {
   const navigate = useNavigate();
   const { data: days, isLoading, error } = useEvents();
+  const { data: generalMetrics } = useGeneralMetrics();
   const createReservation = useCreateReservation();
   const [selectedSlot, setSelectedSlot] = useState<TimeSlot | null>(null);
   const [selectedDayId, setSelectedDayId] = useState<string | null>(null);
@@ -194,37 +196,13 @@ function PublicView() {
 
         <main className="container-page space-y-6 flex-1">
           <div className="mt-2 bg-white/80 backdrop-blur rounded-2xl px-4 py-3 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-            <div>
-              <p className="text-sm md:text-base text-[#6c757d] max-w-3xl font-myriad">
-                Selecciona tu horario de asistencia al Global Money Week en el
-                Centro de Exposiciones Quito.
-              </p>
-            </div>
-            <div className="flex flex-wrap gap-2 text-[11px] md:text-xs">
-              <span className="badge bg-[#e6f7d9] text-[#2c7a1f]">
-                <span className="h-2 w-2 rounded-full bg-[#2c7a1f] mr-1.5" />
-                Alta
-              </span>
-              <span className="badge bg-[#fff4d2] text-[#d88700]">
-                <span className="h-2 w-2 rounded-full bg-[#d88700] mr-1.5" />
-                Media
-              </span>
-              <span className="badge bg-[#ffe3e3] text-[#c53030]">
-                <span className="h-2 w-2 rounded-full bg-[#c53030] mr-1.5" />
-                Baja
-              </span>
-            </div>
-          </div>
-          <div className="mt-2 bg-white/80 backdrop-blur rounded-2xl px-4 py-3 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-          
             <p className="text-sm md:text-base text-[#6c757d] max-w-3xl font-myriad">
-              Visualiza la disponibilidad de cupos por día y horario, y realiza
-              la reserva de tu unidad educativa de manera rápida y segura. Cada
-              franja cuenta con una capacidad máxima de{" "}
+              ¡Reserva tu cupo ahora y asegura tu lugar! No te quedes sin espacio,
+              ¡ya hay más de{" "}
               <span className="font-semibold text-primary font-gothic">
-                200 estudiantes
-              </span>
-              .
+                {(generalMetrics?.totalStudents ?? 0).toLocaleString()} estudiantes
+              </span>{" "}
+              inscritos!
             </p>
           </div>
           <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">

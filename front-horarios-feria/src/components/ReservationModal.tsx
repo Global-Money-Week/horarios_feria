@@ -43,7 +43,7 @@ const LIMITS = {
   email: 255,
   schoolName: 200,
   coordinatorName: 100,
-  studentsMax: 200,
+  studentsMax: 300,
 } as const
 
 /** Código AMIE listo para consulta: al menos 6 caracteres, solo alfanumérico, máximo 10 dígitos */
@@ -122,7 +122,7 @@ export function ReservationModal({ isOpen, slot, dayId, onClose, onConfirm }: Re
       if (value !== '') {
         const num = parseInt(value, 10)
         if (num > LIMITS.studentsMax) value = String(LIMITS.studentsMax)
-        else value = value.slice(0, 3) // máx 3 dígitos (200)
+        else value = value.slice(0, 3) // máx 3 dígitos (hasta 300)
       }
     }
 
